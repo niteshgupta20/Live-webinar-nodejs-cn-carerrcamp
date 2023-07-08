@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require("mongoose");
 const Candidate = require('../../models/candidate');
 
 router.get('/', async function callback(req, res) {
