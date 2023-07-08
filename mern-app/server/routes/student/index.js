@@ -62,9 +62,9 @@ router.put('/:id', middleware.authMiddleware1 ,async function callback(req, res)
       });
     }
     
-    let student = await Candidate.findById(id);
-
-    if (student) {
+    let student = await Candidate.findOne({ email: req.cookies.user }, { _id: 1 });
+    
+    if (student.id === id) {
 
       const update = {
         name: req.body.name,
@@ -84,10 +84,10 @@ router.put('/:id', middleware.authMiddleware1 ,async function callback(req, res)
         message: "Student updated sucessfully!",
         student: student
       });
-   } else {
-       return res.status(403).json({
-         message: "Student not found!"
-       });
+    } else {
+      return res.status(401).json({
+        message: "UnAuthorized | You can not update the student"
+      });
    }
   } catch (error) {
     console.log("**** UPDATE STUDENT API ****", error);
