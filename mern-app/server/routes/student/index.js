@@ -71,7 +71,10 @@ router.put('/:id', async function callback(req, res) {
       }
 
       const options = {
-        new: true
+        new: true,
+        select: {
+          password: 0
+        }
       }
 
       student = await Candidate.findByIdAndUpdate(id, update, options);
