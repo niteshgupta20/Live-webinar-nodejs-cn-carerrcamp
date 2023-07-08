@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const middleware = require('../../middlewares/authMiddleware');
 const mongoose = require("mongoose");
 const Candidate = require('../../models/candidate');
 
@@ -51,7 +52,7 @@ router.post('/', async function callback(req, res) {
   }
 });
 
-router.put('/:id', async function callback(req, res) {
+router.put('/:id', middleware.authMiddleware1 ,async function callback(req, res) {
   try {
     const id = req.params.id;
 

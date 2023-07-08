@@ -5,9 +5,12 @@ const Candidate = require('../../models/candidate');
 router.post('/', async function callback(req, res) {
   try {
 
-    let user = await Candidate.findOne({ email: req.body.email, password: req.body.password }, {password: 0});
+    let user = await Candidate.findOne({ email: req.body.email, password: req.body.password }, { password: 0 });
 
     if (user) {
+
+      res.cookie('user', user.email);
+
       return res.status(200).json({
         message: 'User Loggedin Successfully!',
         user: user,
