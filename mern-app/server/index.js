@@ -10,53 +10,6 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-let counter = 0;
-// create your own custom middleware
-app.use(function (req, res, next) {
-  counter++;
-  console.log("Request Number: ", counter);
-  next();
-});
-
-app.get('/', function callback(req, res) {
-  var options = {
-    root: __dirname
-  }
-  return res.sendFile('index.html', options);
-});
-
-
-app.get('/home', function callback(req, res) {
-  console.log("Query ", req.query);
-  return res.send('<h1>Served By ExpressJS!</h1>');
-});
-
-app.get('/about/:id', function callback(req, res) {
-  console.log(req.params);
-  return res.status(200).json({
-    id: req.params.id,
-    name: 'CN',
-    roll: 100
-  });
-  // return res.send('<h1>About JS</h1>');
-});
-
-// CRUD API
-
-// const students = [
-//   {
-//     name: 'A',
-//     roll: 100
-//   },
-//   {
-//     name: 'B',
-//     roll: 101
-//   },
-//   {
-//     name: 'C',
-//     roll: 102
-//   }
-// ];
 
 app.get('/student', async function callback(req, res) {
 
