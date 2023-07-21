@@ -4,7 +4,7 @@ const middleware = require('../../middlewares/authMiddleware');
 const mongoose = require("mongoose");
 const Candidate = require('../../models/candidate');
 
-router.get('/', async function callback(req, res) {
+router.get('/', middleware.authMiddleware1, async function callback(req, res) {
 
   try {
     const students = await Candidate.find({});
