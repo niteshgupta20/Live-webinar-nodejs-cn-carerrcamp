@@ -57,3 +57,14 @@ exports.authMiddleware2 = async function (req, res, next) {
     });
   }
 };
+
+exports.authMiddleware3 = async function (req, res, next) {
+  console.log('passport user in middleware ', req.user);
+  if (req.user) {
+    next();
+  } else {
+    return res.status(403).json({
+      message: 'Please Login Again',
+    });
+  }
+};

@@ -4,7 +4,7 @@ const middleware = require('../../middlewares/authMiddleware');
 const mongoose = require('mongoose');
 const Candidate = require('../../models/candidate');
 
-router.get('/', middleware.authMiddleware2, async function callback(req, res) {
+router.get('/', middleware.authMiddleware3, async function callback(req, res) {
   try {
     const students = await Candidate.find({});
 
@@ -49,7 +49,7 @@ router.post('/', async function callback(req, res) {
 
 router.put(
   '/:id',
-  middleware.authMiddleware2,
+  middleware.authMiddleware3,
   async function callback(req, res) {
     try {
       const id = req.params.id;

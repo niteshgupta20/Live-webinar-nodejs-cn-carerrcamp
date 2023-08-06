@@ -31,8 +31,9 @@ passport.serializeUser(function (user, done) {
 // TO VERIFY THE COOKIE
 passport.deserializeUser(async function (id, done) {
   try {
-    const candidate = Candidate.findById(id);
+    const candidate = await Candidate.findById(id);
     if (candidate) {
+      // req.user = candidate
       done(null, candidate);
     } else {
       done(null, false);
