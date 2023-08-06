@@ -7,7 +7,7 @@ exports.authMiddleware1 = async function (req, res, next) {
       const user = await Candidate.findOne({ email: req.cookies.user });
 
       if (user) {
-        // include user in the user object so that user is available in the API's
+        // include user in the request object so that user is available in the API's
         req.user = user;
         next();
       } else {
@@ -37,7 +37,7 @@ exports.authMiddleware2 = async function (req, res, next) {
       const user = await Candidate.findOne({ email: data });
 
       if (user) {
-        // include user in the user object so that user is available in the API's
+        // include user in the request object so that user is available in the API's
         req.user = user;
         next();
       } else {
