@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const companiesSchema = new mongoose.Schema(
+const interviewSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -34,5 +34,5 @@ const companiesSchema = new mongoose.Schema(
 // mongoose.model() :- compiles the schema and also add functions in the Model
 // 1st argu:- collection name
 // 2nd argu:- schema
-const Company = mongoose.model('Company', companiesSchema);
-module.exports = Company;
+const Interview = mongoose.model('Company', interviewSchema);
+module.exports = Interview;
