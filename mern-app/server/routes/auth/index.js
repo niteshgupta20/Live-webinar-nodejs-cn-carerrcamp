@@ -5,6 +5,7 @@ const Candidate = require('../../models/candidate');
 // const passport = require('../../config/passportLocalStrategy');
 const passportJWT = require('../../config/passportJWT');
 const GoogleOAuth = require('google-auth-library');
+const generator = require('generate-password');
 
 // router.post('/', async function callback(req, res) {
 //   try {
@@ -71,16 +72,28 @@ router.post('/google', async function (req, res) {
   const client = new GoogleOAuth.OAuth2Client(
     '921757122855-bflp0sr2r1irrl7sr993c3j4sstm2t07.apps.googleusercontent.com'
   );
-  
+
   const ticket = await client.verifyIdToken({
     idToken: req.body.token,
     audience:
       '921757122855-bflp0sr2r1irrl7sr993c3j4sstm2t07.apps.googleusercontent.com',
   });
-  const profileData = ticket.getPayload();
+
+  const { name, email } = ticket.getPayload();
+
+  // store the user in the database.
+  let candidate = await Candidate.findOne({ email: email });
+
+  if (!candidate) {
+    const password = generator.generate({
+      length: 8,
+      numbers: true,
+    });
+    candidate = await Candidate.create({ name, email, password: password });
+  }
 
   return res.status(200).json({
-    data: profileData,
+    data: candidate,
   });
 });
 
