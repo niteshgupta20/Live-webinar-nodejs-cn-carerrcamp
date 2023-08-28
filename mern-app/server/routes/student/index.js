@@ -3,22 +3,28 @@ const router = express.Router();
 const middleware = require('../../middlewares/authMiddleware');
 const mongoose = require('mongoose');
 const Candidate = require('../../models/candidate');
+const passportJWT = require('../../config/passportJWT');
 
-router.get('/', middleware.authMiddleware3, async function callback(req, res) {
-  try {
-    const students = await Candidate.find({});
+router.get(
+  '/',
+  passportJWT.authenticate('jwt', { session: false }),
+  async function callback(req, res) {
+    console.log(req.user);
+    try {
+      const students = await Candidate.find({});
 
-    return res.status(200).json({
-      message: 'Students fetched successfully!',
-      data: students,
-    });
-  } catch (error) {
-    console.log('**** GET ALL STUDENT API ****', error);
-    return res.status(500).json({
-      message: 'Internal Server Error',
-    });
+      return res.status(200).json({
+        message: 'Students fetched successfully!',
+        data: students,
+      });
+    } catch (error) {
+      console.log('**** GET ALL STUDENT API ****', error);
+      return res.status(500).json({
+        message: 'Internal Server Error',
+      });
+    }
   }
-});
+);
 
 router.post('/', async function callback(req, res) {
   try {
